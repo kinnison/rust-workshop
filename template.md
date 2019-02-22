@@ -1,4 +1,4 @@
-title: Talk title
+title: Rust Workshop - Session NNN
 class: animation-fade
 layout: true
 
@@ -33,17 +33,16 @@ class: impact
 ???
 
 - Welcome everyone
-- Explain the intent of the talk
-- Gauge the audience level?
+- Explain the intent of the session
 
 ---
 
-title: What???
+title: Topics
 class: middle
 
 ???
 
-Explain what things are
+Explain what things will be covered in this session
 
 ---
 
