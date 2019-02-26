@@ -337,9 +337,9 @@ some_str.parse().map_err(|_| format!(....))
 * We know that at least the first call of `.next()` on `args()` will be safe
 * We can parse a string, look at `str::parse` in the docs
 * Parsing returns a Result, upgrade main to return a result
-* Now write a function which takes an `Option<String>` from `args()` and
-  returns a `Result<u32, String>` or similar.
-* Now use match in main to deal with it all.
+* Now we could write a function which takes an `Option<String>` from `args()`
+  and returns a `Result<u32, String>` or similar.
+* And then use match in main to deal with it all.
 
 ---
 
@@ -392,10 +392,6 @@ something_else(something?)
 
 The question mark operator let's us clean things up
 
-So let's use it rather than match in our `main` from earlier.
-
-> Switch back to our ten-bottles code and refactor for this.
-
 ---
 
 title: Everything is good
@@ -404,7 +400,7 @@ title: Everything is good
 * We have implemented a ten green bottles song program
 * This has allowed us to practice using `if` as an expression
 * This has taught us about for loops and iterators to some extent
-* We have played with some error handling and propagation
+* We briefly looked at some error handling and propagation
 
 ???
 
