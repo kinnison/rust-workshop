@@ -59,14 +59,19 @@ two variants.  One for the form "name:number" and one for the form "name".
 I want you to implement `std::convert::From` for your enumeration, converting
 from either `&str`, `&String` or, if you're feeling exuberant, from `AsRef<str>`.
 
+Note that you won't be able to parse the number usefully at this point, but
+that's ok.
+
 Then I'd like for you to write a function which takes a filename and returns
-a Result<Vec<EnumName>, String> which opens and reads the file (whichever approach
-you prefer) and then converts the lines into those EnumName instances using the
-implementation above, returning a vector.
+a Result<Vec<EnumName>, Box<std::error::Error>> which opens and reads the file
+(whichever approach you prefer) and then converts the lines into those EnumName
+instances using the implementation above, returning a vector.
 
 At this point, I'd like you to print out the result of parsing your input by
 means of `println!("{:?}", thatvector);` to demonstrate that you've parsed
-your input usefully.
+your input usefully.  Do this from your main() function which will therefore
+also need to return an error result in order to allow you to use the `?` operator.
+Also remember that you'll need to derive debug for your enum to make this possible.
 
 Next I'd like you to define a struct to represent scores.  Each input line is,
 in fact, a score from a test.  I'm not telling you if small numbers are good
@@ -81,7 +86,7 @@ and for you to use this instead of writing a `ScoreStruct::new` function which
 takes no arguments.
 
 You'll want some nice methods on that struct such as `add_score` or `missed_test`
-and accessor methods for the results.  
+though you likely won't need accessor methods for the scores.
 
 Finally I'd like you to use `HashMap` to map from a person's name to an
 accumulation of their scores.  Ideally you should be using the `Entry` API on
@@ -123,7 +128,9 @@ RawInstruction enumeration from above, and also a pair of `usize` values to
 represent the line number and character column of the instruction.
 
 Please write a function like in part 1 which takes a filename and returns a
-Result<Vec<StructFromAbove>, String>.
+Result<Vec<StructFromAbove>, Box<std::error::Error>>.
+
+Use a debugging `println!` to ensure the parsed data is useful.
 
 What I'd like as the final output of this part is something akin to:
 
@@ -136,3 +143,8 @@ This might require you to add a `Display` implementation for your `RawInstructio
 and appropriate methods on your struct to get hold of the line and column numbers.
 Also make sure you give human numbering for lines and columns - humans count from
 one, not zero.
+
+As you implement this last part you may come across an error akin to:
+"cannot move out of borrowed context" when implementing your accessor method
+for the `RawInstruction`.  If you do, you might find the `Clone` and `Copy`
+traits useful to derive on your nice simple enumeration.
