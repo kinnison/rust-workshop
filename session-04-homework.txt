@@ -1,0 +1,58 @@
+Session 4 homework
+==================
+
+As with session 3, this session's homework is entirely focussed on your `bft`
+project.  However unlike session 3, this time a lot of the detail will be left
+up to you.  At the end of this session's homework, your `bft` tool will have a
+slightly nicer CLI arg parser and should be capable of syntax checking the
+hello-world program which we have been carrying around since session 1.
+
+Task One - The completionist
+============================
+
+If you've not completed everything from session 3's homework, including all
+the extra credit which is not reliant on a specific CI system (i.e. all the
+nice documentation, code arrangement, etc) then please go back and do so.
+
+Your interpreter should optionally support extendible cells etc.
+
+This means adding documentation to your `bft_interp` crate and also your `bft`
+crate please.
+
+Task Two - A CLI
+================
+
+Using Clap, Structopt, or some other crate meant to help you with CLIs, please
+add a CLI to your `bft` application.  Your application should require a
+positional argument called `PROGRAM` and report a suitable error if it isn't
+supplied.
+
+Handle your CLI in a separate module called `cli` which is in a separate file
+`cli.rs`.
+
+In addition, your program should accept `-c` or `--cells` with a non-zero
+numeric argument to be the number of cells in the tape.  Also it should accept
+a '-e' or '--extensible' which will turn on the auto-extending tape.
+
+Process the command line arguments, report any issues, and prepare the
+interpreter instance using them.  Validation of the command line arguments
+should, ideally, be handled by the hooks of whichever CLI library you choose.
+
+Task Three - Validating the program
+===================================
+
+A BF program cannot be guaranteed to be syntactically valid.  There are various
+ways in which a program could be invalid, but the one we care about for this
+task is balanced square brackets.  Since the behaviour of the open bracket and
+close bracket require the matched bracket it's essential that they balance.
+However the angle brackets do not have to be syntactically balanced.
+
+Add a function to your program structure which will check the brackets are
+balanced, reporting the first problem you find. For extra credit, if you can
+store anything to make interpreting the program later more efficient then do so
+by making this analysis/checking function take `&mut self`.
+
+Ensure that this is called in your `main()` and errors reported.
+
+Don't forget that this will need tests and documentation.
+
