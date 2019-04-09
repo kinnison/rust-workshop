@@ -202,7 +202,7 @@ title: Commandline handling - Clap - Simple example
 
 ```rust
 App::new("Brainfuck Tool")
-     .version(env!("CARGO_MANIFEST_VERSION"))
+     .version(env!("CARGO_PKG_VERSION"))
      .author("Daniel Silverstone")
      .about("Interprets Brainfuck programs")
      .arg(Arg::with_name("PROGRAM")

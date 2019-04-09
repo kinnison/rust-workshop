@@ -3,14 +3,12 @@ Session 5 homework
 
 As with session 4, this session's homework is entirely focussed on your `bft`
 project.  Like in session 4, a lot of the detail will be left up to you.  At
-the end of this session's homework, your `bft` tool should be capable of
+the end of this session's homework, your `bft` tool will be closer to
 interpreting the hello-world program which we have been carrying around since
 session 1.
 
 This is a large amount of work and you are not expected to necessarily complete
-it within an hour.  However it should be a "simple matter of programming" since
-there's not really any new Rust to learn, it's just time to practice writing
-it.
+it within an hour.
 
 Task One - Shaking your head
 ============================
@@ -45,15 +43,22 @@ member (so they need to take `&mut self`) and return something like a
 Remember to add documentation and tests for these functions, testing both the
 success and the failure situations.
 
-Task Two - Basic I/O and maths
-==============================
+Task Two - Traits and maths
+===========================
 
 Following the same pattern as for the move-left and move-right methods, add
 methods for incrementing and decrementing the values in the cells.  Since we're
 modelling a system where values wrap between 0 and the maximum unsigned integer
 for the type in question, you're going to want to use `wrapped_add` and
-`wrapped_sub` which might lead you to need to add some more type constraints to
-the impl in order to make them available.
+`wrapped_sub` which might lead you to need to write a trait to provide wrapping
+increment and decrement, write an impl for u8 for that, and then add some more
+type constraints to the VM impl in order to make them available.
+
+Remember to write some tests, docs, etc, so that it's nice and clear what's
+going on.
+
+Task Three - Basic I/O
+======================
 
 Now we want to add I/O.  We want to do this moderately generically in order
 that we can test these functions usefully.  As such, ensure that the function
@@ -64,7 +69,10 @@ for IO errors.  It should take the IO error *and* the marked instruction.
 
 While you can wrapper up the IO error manually, it'd be nice to enable the
 use of the `?` operator on the `.read()` call by adding a From impl to convert
-from a `std::io::Error` to your `VMError` type.
+from a `std::io::Error` to your `VMError` type.  Sadly this isn't easily done
+and so for this part of your homework, do a manual wrapper and add a comment in
+one or other of the input or output routines explaining why you can't use `?`
+to do this.
 
 Your output function should take any Write impl, and do similarly.
 
@@ -72,8 +80,24 @@ Remember that your functions need documentation and also tests.  You can use
 the `std::io::Cursor<Vec<u8>>` type to provide readers and writers for the
 purpose of testing your input and output functions.
 
-Task Three - Looping constructs
-===============================
+END OF SESSION FIVE
+
+-------------------------------------------------------------------------------
+
+Session 6 homework
+==================
+
+As with session 5, this session's homework is entirely focussed on your `bft`
+project.  Like in session 5, a lot of the detail will be left up to you.  At
+the end of this session's homework, your `bft` tool will finally be able to be
+interpreting the hello-world program which we have been carrying around since
+session 1.
+
+This is a large amount of work and you are not expected to necessarily complete
+it within an hour.
+
+Task One - Looping constructs
+=============================
 
 The looping constructs are the hardest bit for our interpreter to implement.
 Both do a test and optional jump.
@@ -109,8 +133,8 @@ Now, add a function for the other of the two, add the cell check, and return
 the appropriate new instruction pointer according to the check's result.
 Document and test this function.
 
-Task Four - A first VM loop
-===========================
+Task Two - A first VM loop
+==========================
 
 We're finally ready to add our initial VM loop.  We're going to be replacing
 our debug printout interpreter from last time.  Our VM loop needs to take a
@@ -133,19 +157,21 @@ Don't forget to document and to test your VM loop as well.  Either by means
 of IO, or, for now, by means of running a simple program and then checking the
 content of one or more of the cells in the tape.
 
+When you add support to your `main()` to call this interpreter loop, remember
+that you will have to report errors nicely to the user, as returned from the
+interpreter.
+
 Assuming all has gone well, you ought to be able to, at this point, run `cargo
 run -- helloworld.bf` where `helloworld.bf` is the BF program you received in
 previous homework.
 
-Task Five - Make it neat
-========================
-
-**EXTRA CREDIT**
+Task Three - Make it neat
+=========================
 
 You may have noticed that the `helloworld.bf` I provided does not terminate
 its output with a nice newline.  It would be super nice if you could detect
 that and output a newline (perhaps in `main()` perhaps in `VM::interpret()`)
 should this happen, just so that output is neater.
 
-If you can work out how to do this, don't forget to document it and test it.
+Don't forget to document it and test it.
 
