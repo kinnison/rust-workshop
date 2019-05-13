@@ -65,8 +65,9 @@ solved them.
 ---
 
 title: Marker traits
+class: impact
 
-# What are they?
+## What are "marker" traits?
 
 ???
 
