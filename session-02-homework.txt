@@ -61,9 +61,10 @@ I would like you to define a enum to represent a line.  It should have
 two variants.  One for the form "name:number" and one for the form "name".
 
 I want you to implement `std::convert::TryFrom` for your enumeration, converting
-from either `&str`, `&String` or, if you're feeling exuberant, from `AsRef<str>`.
+from either `&str`, `&String`.
+
 Remember you can bring the trait into scope with `use std::convert::TryFrom` and
-then you simply need to `impl TryFrom for WhateverYouCalledYourEnumeration {…}`.
+then you simply need to `impl TryFrom<&str> for WhateverYouCalledYourEnumeration {…}`.
 
 You should be able to parse the "name:number" form into a string and a number
 of some type.  I'll be perfectly happy if the error type you associate to your
@@ -108,7 +109,7 @@ of `HashMap<String, ScoreStruct>`.
 Ensure you can print the `HashMap` using `println!("{:?}", fullmap);`
 
 Finally, demonstrate the full scores by iterating through the map, outputting
-likes such as:
+lines such as:
 
     Daniel Silverstone took N tests, with a total score of M.  They missed F tests.
 
