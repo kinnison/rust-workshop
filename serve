@@ -1,0 +1,5 @@
+#!/bin/sh
+
+npm i backslide
+
+exec node_modules/backslide/bin/bs serve
