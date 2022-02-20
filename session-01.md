@@ -47,7 +47,7 @@ class: middle
 
 1. Get everyone set up with a toolchain
 2. Get everyone comfortable finding docs / introduction to books
-3. Example of working environment - VSCode/RLS
+3. Example of working environment - VSCode/rust-analyzer
 4. Some language and syntax fundamentals
 
 ---
@@ -56,18 +56,22 @@ title: Setting up a toolchain
 
 # Installing Rust in the first place
 
+### Assuming a "normal" Linux system
+
 ```shell
+... open a terminal ...
 $ curl https://sh.rustup.rs/ | sh -
 ... time passes ...
 $ exit
-... open new shell ...
+... open new terminal ...
 $ cargo --version
-cargo 1.41.0 (626f0f40e 2019-12-03)
+cargo 1.58.0 (f01b232bc 2022-01-19)
 ```
 
 ???
 
-Perform this to install Rust, flip to a terminal to demonstrate.
+Perform this to install Rust. If you have an unusual system (e.g. Windows,
+or nixos) then you may need some other steps.
 
 Use this time to explain about the stable/beta/nightly channels and that
 for now at least we'll be using stable.
@@ -79,10 +83,10 @@ title: Setting up a toolchain
 # Adding components
 
 ```shell
-$ rustup component add rls rust-src rust-analysis
+$ rustup component add clippy
 ... time passes ...
-$ rls --version
-rls 1.41.0 (8f1c275 2019-12-10)
+$ cargo clippy --version
+clippy 0.1.58 (db9d1b2 2022-01-20)
 ```
 
 ???
@@ -91,10 +95,9 @@ rls 1.41.0 (8f1c275 2019-12-10)
 - Explain that the concept of profiles
   - minimal - rustc, cargo, rust-std
   - default - also rustfmt clippy, rust-docs
-  - complete - don't use this
 - Clippy is a linting tool
-- RLS is the language service (useful later)
 - Rustfmt is for standardising formatting
+- rust-docs are the language documentation, you _will_ want it.
 
 ---
 
@@ -102,11 +105,13 @@ title: IDE integration
 
 - VSCode <https://code.visual-studio.com/>
 - `rustup`, `clippy`, `rustfmt` etc
-- VSCode's official `rust-lang.rust` extension
-  - `Ctrl+P` `ext install rust-lang.rust` `RET`
+- VSCode's rust-analyzer `matklad.rust-analyzer` extension
+  - `Ctrl+P` `ext install matklad.rust-analyzer` `RET`
   - Recommended configurations which differ from default:
   - `editor.formatOnSave` set to `true` for `rustfmt` integration
-  - I suggest making clippy `on` but some people prefer `opt-in`
+  - `rust-analyzer.checkOnSave.command` set to `clippy` so that you get lints
+  - `rust-analyzer.lens.methodReferences` set to `true` helps
+  - `rust-analyzer.lens.references` set to `true` also helps.
 
 ???
 
@@ -115,6 +120,7 @@ title: IDE integration
 3. run `code`
 4. Install the extension
 5. Make configurations as needed
+6. The first time we open a rust project, more will happen
 
 ---
 
@@ -136,7 +142,7 @@ $ rustup doc --reference
 ???
 
 Most of the time we'll be using the std docs, but the book and reference will
-prove to be useful background reading if you want to rush ahead.
+prove to be useful background reading if you want to read ahead.
 
 ---
 
@@ -205,7 +211,8 @@ class: impact
 
 ???
 
-Sometimes vim on the commandline isn't good enough - show VSCode/RLS
+- Now let's open this in vscode and let rust-analyzer get our system ready.
+- Talk about the inlays and other features of vscode.
 
 ---
 
@@ -221,6 +228,8 @@ class: impact
 - To do this, let's start with a function to print a verse
 - Encourage them to use u32 or usize for this, since we don't want negative
   bottles.
+- Explain that we're going to come back and forth between the code and slides
+- Do not go further than writing the function for printing a verse out.
 
 ---
 
@@ -240,6 +249,7 @@ if condition {
 
 - We want to print a normal verse, but we need to know `bottle` vs `bottles`
 - Also when there's no bottles left, we want to say `no green bottles`
+- Now code this up
 - Practice by running calling it with a few different values including
   `10`, and `1`
 
@@ -412,9 +422,10 @@ Does anyone have any questions about what we've covered thus-far?
 
 ---
 
+class: impact
 title: Reading input
 
-- How do we get data into a program?
+# How do we get data into a program?
 
 ???
 
@@ -447,15 +458,16 @@ fn main() -> Result<(), Box<dyn Error>> {
 - Putting all of that together we can write something like this
 - Walk through it explaining:
   1. Main's return type and what that Box is in brief terms
-  2. Hilight the question mark operator
+  2. Highlight the question mark operator
   3. Explain how `len()` is bytes, but the `chars()` iterator is characters
-  4. Show how even if you have a string, you MUST have a format.
+  4. Demonstrate that by means of some utf8 fancy chars (emoji or otherwise)
+  5. Show how even if you have a string, you MUST have a format for `println!()` et al.
 
 ---
 
 title: Homework
 
-Things for you to research if you want a leg-up for next week
+Things for you to research if you want next week to make more sense:
 
 - These file-associated things:
 
@@ -493,6 +505,10 @@ to grok some more of the standard library as I suggested on the previous slide.
 
 Each question should be answered as a fresh cargo binary project and you should
 bring them with you on your laptops next week for the recap/questions session.
+
+If you need help, please start by asking on `#rust` on our IRC, if that's too
+confusing for you, use our channel `#rust-course`, though learning from your
+more experienced colleagues will be a skill you want to develop.
 
 ---
 

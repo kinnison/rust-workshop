@@ -1,11 +1,18 @@
-Session 1 homework
-==================
+# Session 1 homework
 
-Across the early weeks, problem 1 will just be a warmup using the things learned
+First up, have you remembered to take a look over the `Path`, `PathBuf`, `File`,
+and `BufRead`/`BufReader` materials? Have you had a good go at understanding
+what `Option<T>` and `Result<T,E>` are? If not, bear in mind you'll likely need
+to revisit those items at least a little through this homework session.
+
+Across the early weeks, problem 1 will be a warmup task using the things learned
 in that week's session, stretching you a little by being not the most complete
-of problem descriptions.  However problem 2 will be building up week on week,
-so while your solutions to problem 1 can be throw away, you'll be able to think
-ahead with problem 2, but don't work ahead or you might skip important steps
+of problem descriptions.
+
+However problem 2 will be building up week on week.
+
+So while your solutions to problem 1 can be throw away, you'll be able to think
+ahead with problem 2. But don't work ahead or you might skip important steps
 as we move through the weeks.
 
 At the end of session one we had covered hopefully enough about IO that you
@@ -13,13 +20,24 @@ can easily load the input data below, but if you need reminding, please recheck
 what was recommended in the session.
 
 Your answers to the homework questions should be cargo binary projects which
-function as per the instructions.  To submit your homework, please ensure that
+function as per the instructions. To submit your homework, please ensure that
 you have deleted the `target` directory (where cargo puts its build artifacts)
-before you tar it up.  Submissions are due on the morning of the day before
-the next session.
+before you tar, or zip it up.
 
-Problem 1: Adding up numbers
-----------------------------
+If you prefer, you can store your homework in a git repository, so long as that
+repository is shared with me, and you email in an indication of which branch
+and what commit SHA you want me to consider your homework.
+
+Submissions are due on the morning of the day before the next session. While
+there is no formal "mark" for your homework, sending it in will give me time to
+review any issues which people had, so that we can start the next session with
+a discussion of common issues etc. Problems you have _will_ shape the rest of
+the course, so please do not fail to submit your homework.
+
+If you want to submit early and/or ask questions, then feel free to do so at any
+point up to the final submission deadline.
+
+## Problem 1: Adding up numbers
 
 You have an input file whose content is as follows (ignoring the obvious
 start/end markers and the indentation, i.e. the first line is '14' and the
@@ -28,25 +46,25 @@ last is '46'):
     ---8<---
     14
     9
-    7
+    -7
     1
-    -5
+    5
     0
     -2
     9
     1
     -100
-    75623
-    -65536
+    -75623
+    65536
     -100
     5
     2
-    100
+    15100
     46
     ---8<---
-    
+
 Your goal is to write a program which when run as follows:
-    
+
     $ cargo run -- inputfilename
 
 will read the contents of `inputfilename`, break it into lines, parse each line
@@ -61,19 +79,22 @@ Bonus points if you make interesting use of `Iterator` methods.
 Note: You should test your program with good and bad inputs, and make sure that
 it reports errors as you'd expect.
 
-Problem 2 - In for the long haul
---------------------------------
+I will not use the exact name `inputfilename` nor the exact number sequence
+above when I test your program, so do not cut corners here. Use what we learned
+during session one.
+
+## Problem 2 - In for the long haul
 
 You now have an input file with the following content:
 
     ---8<---
     This is your input file
-    
+
     Anything which is not one of the important characters will be ignored
     by the program
-    
+
     The program is as follows:
-    
+
        +[-
          [<<
           [+
@@ -82,21 +103,21 @@ You now have an input file with the following content:
          ]
         ]>>>-
        ]
-    
+
     I'm guessing that you know where we're going with all this
-    
+
        >-.---.>..>.<<<<-.<+.>>>>>.>.<<.<-.
-    
+
     But perhaps you're as lost as a little lamb?
     ---8<---
 
-As you can no doubt tell, this is a program in the [Brainfuck][] language.
+As some of you will likely know, this is a program in the [Brainfuck][] language.
 
 For now, we're not going to be writing anything as complex as a Brainfuck
 interpreter, though we will be building one in the future so bear that
 in mind as you write today's homework answer.
 
-[Brainfuck]: https://en.wikipedia.org/wiki/Brainfuck
+[brainfuck]: https://en.wikipedia.org/wiki/Brainfuck
 
 For today, please write a program which, when run as:
 
@@ -104,7 +125,7 @@ For today, please write a program which, when run as:
 
 will read `inputfile`, reduce it to the list of valid Brainfuck characters
 (i.e. strip out all of the comment characters) and then print out the
-program.  There are eight valid command characters, and they're listed in
+program. There are eight valid command characters, and they're listed in
 the Wikipedia article.
 
 You can do this entirely with things we've already considered, by means of
@@ -115,4 +136,5 @@ However, for bonus points, make use of `Vec<char>`, `Vec<u8>` or `String` and
 learn how to use `collect()` from the `Iterator` trait.
 
 Note: You'll want to get hold of as many different valid Brainfuck inputs as you
-can to try it out.
+can to try it out. I will not be holding back with my test cases, so be as thorough
+as you can.
