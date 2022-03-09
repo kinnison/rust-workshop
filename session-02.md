@@ -393,8 +393,8 @@ title: creating new things - 2
 
 ```rust
 impl Person {
-    pub fn new(name: &str, age: usize) -> Person {
-        Person {
+    pub fn new(name: &str, age: usize) -> Self {
+        Self {
             name: name.to_owned(),
             age,
         }
@@ -409,6 +409,9 @@ of the type we're implementing. These functions generally can't fail. As you
 can see, the syntax to create a struct is simply `Structname { fields }` and
 you can name expressions to put them in particular fields, or merely have
 expressions which consist of a variable of a name matching a field.
+
+You can also see that within an `impl` block we can use `Self` to refer to the
+type we're implementing.
 
 ---
 
@@ -454,7 +457,7 @@ title: Using our Person
 ...
 
 fn get_author() -> Person {
-    Person::new("Daniel Silverstone", 39 /* For now. */)
+    Person::new("Daniel Silverstone", 41 /* For now. */)
 }
 
 fn main () {
@@ -624,6 +627,59 @@ Note: While the compiler will currently allow you to elide the `impl` in that
 function declaration but including it is
 good practice since it helps a reader to know that they should be looking for
 an `Identifiable` **trait** rather than a `struct` or `enum`.
+
+---
+
+title: Extra credit - the dirty `M` word
+
+```rust
+fn greet(who: &impl Identifiable) {
+    println!("Hello {}", who.identify());
+}
+```
+
+???
+
+When Rust encounters an `impl TraitName` situation, this is a point where the
+compiler does something perhaps unintuitive. Every time you call this function
+the compiler will look at what type you call it with, and will create a new
+copy of the function to work with that type.
+
+This is called _monomorphization_ and you will encounter that term when you
+look at more complex Rust documentation in the future, so it helps to be aware
+of it.
+
+This means that if you have a lot of generic functions of this form, your
+program will get bigger and take longer to compile, purely because each time
+the compiler will have to monomorphize the function for the given input types.
+
+---
+
+title: Extra credit - faster compilation
+
+```rust
+fn greet(who: &dyn Identifiable) {
+    println!("Hello {}", who.identify());
+}
+```
+
+???
+
+If we read the previous function definition as taking a borrow of _something_ which
+implements the `Identifiable` trait, we can read this definition as taking a borrow
+of _anything_ which implements the `Identifiable` trait.
+
+When you see the `dyn` keyword you can read it as "any" in most cases. However,
+in this case, the important thing is that by switching from `impl Identifiable` to
+`dyn Identifiable` we tell the compiler we only want one copy of this function,
+so instead it should compile it to be able to decide at runtime how to find the
+identify function. The compiler does this by passing what it calls a _fat pointer_
+which consists of both a pointer to the value, and a pointer to a special construct
+called a `vtable` which is a set of function pointers for the trait combination needed
+to call the function.
+
+This indirection through the vtable costs runtime performance, however it isn't that
+much runtime performance so don't be afraid to use `dyn` if it makes sense.
 
 ---
 
