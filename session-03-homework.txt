@@ -106,7 +106,7 @@ Classical BF has byte-sized numbers and 30,000 of them in the array.
 In the 'bft_interp' crate, create a structure to represent the virtual machine.
 Its type should be parameterised over the type of the number kind for the
 'cell' and the associated 'new' function for the struct should take the number
-of cells to allocate for the tape. Ideally it should take that as an usize and
+of cells to allocate for the tape. Ideally it should take that as a usize and
 if zero is provided, it should use the default 30,000. Also, you should allow
 your interpreter to grow the tape optionally, by passing in a boolean to
 indicate if the tape should be permitted to grow; clearly this will also need
@@ -201,3 +201,8 @@ Set up CI on whichever git server you've picked (e.g. Travis or Github Actions
 for Github, or gitlab-ci for GitLab). Ensure that your code passes its tests,
 and is formatted properly, on every commit. If you're feeling super-duper excited,
 make it pass clippy too.
+
+# Handing in
+
+To hand your homework in, send me a link to your repository, and tell me the
+branch and SHA of the commit I should consider your handed-in homework.

@@ -182,7 +182,7 @@ integration test code uses the `#[test]` attribute as well.
 title: CI Habits
 
 - Always run all the tests
-- Generating the documentation for `master`
+- Generating the documentation for `main`
 - Ensuring the formatting of your code
 - Using clippy to be meaner to yourself
 
@@ -191,7 +191,7 @@ title: CI Habits
 An obvious thing to do in CI is to run all your tests by means of `cargo test`
 but there're also other things worth doing. For example, I'd suggest having a
 pipeline step which runs `cargo doc --all` and publishes the docs when commits
-are merged to master.
+are merged to `main`.
 
 You can use `cargo fmt --all -- --check` in your pipeline to refuse commits
 which aren't well formatted.
