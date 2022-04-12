@@ -48,7 +48,7 @@ class: middle
 
 1. Modules - what, how, where, why?
 2. Command line handling with `clap`
-3. Command line handling with `structopt`
+3. Command line handling with `clap-derive`
 
 ---
 
@@ -237,6 +237,27 @@ mod One {
 …then we can perhaps see why test modules can access their parents
 but the main code can't see the test functions.
 
+---
+
+# Some "special" visibilities
+
+```rust
+pub(crate) fn thingy() {}
+
+mod stuff {
+    pub(super) fn another() {}
+    mod banana {
+        pub(in crate::stuff) fn cheese() {}
+    }
+}
+```
+
+???
+
+There are a number of additional visibility markers such as
+`pub(crate)` you won't need them for now, but if you see this
+syntactic construction you at least won't be confused.
+
 We'll come back to visibility in a later session, but this should be
 enough to help you with any odd errors you get while trying to write
 and test your homework.
@@ -317,39 +338,39 @@ Let's create a new binary crate and have a go with clap.
 
 ---
 
-title: Commandline handling - Structopt - Equivalence
+title: Commandline handling - clap-derive - Equivalence
 
 ```rust
 /// A Brainfuck tool
-#[derive(StructOpt,Debug)]
-#[structopt(name = "bft")]
+#[derive(Parser,Debug)]
+#[clap(author, version, about, name = "bft")]
 struct Options {
     /// The program to interpret
-    #[structopt(name="PROGRAM", parse(from_os_str))]
+    #[clap(name="PROGRAM", parse(from_os_str))]
     program: PathBuf,
 }
 
 fn main() {
-    let opt = Options::from_args();
+    let opt = Options::parse();
     println!("{:?}", opt);
 }
 ```
 
 ???
 
-The `structopt` crate actually uses `clap` under the hood, but allows you to
+The `clap-derive` crate uses `clap` under the hood, but allows you to
 define your options by means of a structure instead of open-coding them.
 
-I'm not going to state which one you should use, not least because I use both
-in different circumstances. If you do choose `clap` be aware there's many
+I'm not going to state which approach you should use, not least because I use both
+in different circumstances. If you do choose `clap` directly then be aware there's many
 different ways to use it, the builder pattern shown today, but also a macro,
-and a YAML approach.
+and a YAML approach as well as the derive approach.
 
 ---
 
 title: Homework
 
-Play with `structopt` and `clap` because you'll need one of them (or something
+Play with `clap-derive` and `clap` because you'll need one of them (or something
 similar) for your homework. You'll also want to revise `PathBuf` and `Path`,
 and you might want to learn about `OsStr` and `OsString` because they might
 be important depending on how you do your homework.
