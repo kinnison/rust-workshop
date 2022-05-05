@@ -214,3 +214,8 @@ blockquote {
     left: 0 !important;
   }
 }
+
+// Force the comment colour to be dark green
+span.hljs-comment {
+  color: #006600 !important;
+}
