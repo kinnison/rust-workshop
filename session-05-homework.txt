@@ -8,7 +8,7 @@ interpreting the hello-world program which we have been carrying around since
 session 1.
 
 This is a large amount of work and you are not expected to necessarily complete
-it within an hour.  You have a week to get all of this done, but don't
+it within an hour.  You have a fortnight to get all of this done, but don't
 leave it to the last minute, it won't be trivial to do.  Remember to ask questions
 early, don't leave it until next Monday before trying to do the homework.
 

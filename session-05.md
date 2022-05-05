@@ -34,7 +34,7 @@ class: impact
 
 - Welcome everyone
 - Explain the purpose of the session
-  - Some more trait related stuff, including advanced bits
+  - Some more trait related stuff, including some advanced bits
   - Learn about lifetimes and how borrows use them
 
 ---
@@ -44,20 +44,10 @@ class: middle
 
 # Topics
 
-1. Quick check on homework
-2. Defining your own traits
-3. Another way to say what type you take as an argument
-4. Lifetimes - What are they and why do they matter
-5. Specifying lifetimes when defining types
-
----
-
-class: impact
-title: Homework all OK?
-
-???
-
-Does anyone have anything to ask about their homework?
+1. Defining your own traits
+2. Another way to say what type you take as an argument
+3. Lifetimes - What are they and why do they matter
+4. Specifying lifetimes when defining types
 
 ---
 
@@ -224,8 +214,8 @@ Box<dyn AnotherThing>
 - This helps humans - the compiler could always tell which was which, but
   humans couldn't
 - It's better to add syntax so that different things look different
-- With current Rust compilers, it's a warning if you skip the `dyn` and
-  with a future version it'll become an error. So don't skip it.
+- With current Rust compilers, it's an error if you skip the `dyn` unless
+  you're using the 2015 or 2018 editions.
 
 ---
 
@@ -260,25 +250,10 @@ title: `impl Trait` and `dyn Trait`
 
 ???
 
-The compiler can nudge you toward better code, though for now don't worry
-too much about whether or not to write it, just be always put in the `impl`
-and `dyn` and the compiler will tell you if it's not needed.
-
----
-
-title: `impl Trait` and `dyn Trait`
-
-# Useful to know...
-
-- The compiler will lint this for you…
-- If you add `#![deny(bare_trait_objects)]` to your code then it'll even
-  error on the lints.
-
-???
-
-- You just have to ask it to.
-- It's possible (and likely) that this will become the default in some future
-  version of the compiler.
+- The compiler (or clippy) can often nudge you toward better code
+- But it cannot tell you whether monomorphisation or polymorphism is best for
+  your use-case.
+- Use your brains.
 
 ---
 
@@ -328,7 +303,7 @@ fn get_first<'a>(input: &'a [String]) -> Option<&'a String> {...}
 - This means that the compiler is saying that the returned String borrow
   inside the option will live only as long as whatever the input slice was
   borrowed from.
-- If there is more than one incoming borrow, the compiler cannot infer the
+- If there is more than one incoming borrow, the compiler often cannot infer the
   lifetime of any outgoing borrows and so will complain and ask you to tell it.
 - These are called the elision rules and while they're not quite as simple as
   I mentioned here, and are growing more clever over time, this is a reasonable
@@ -389,6 +364,7 @@ struct MyThing<'a> {
 }
 
 impl<'a> MyThing<'a> {
+//  ^^^^        ^^^^
     ...
 }
 ```
@@ -407,15 +383,43 @@ impl<'a> MyThing<'a> {
 title: Lifetimes - structs - implementation - elision
 
 ```rust
+struct MyThing<'a> {
+    other: &'a SomethingElse,
+}
+
 impl<'a> MyThing<'a> {
-    fn some_method(&mut self) {...}
+    fn new(other: &SomethingElse) -> Self {
+        //        ^                  ^^^^
+    }
 }
 ```
 
 ???
 
 - Fortunately due to the lifetime elision rules, we don't have to then add
-  the `'a` to every borrow of `self`.
+  the `'a` to every time we mention the `Self` or `MyThing` types
+- But the compiler still can't join the borrows together quite right
+
+---
+
+title: Lifetimes - structs - implementation - elision - explicits
+
+```rust
+struct MyThing<'a> {
+    other: &'a SomethingElse,
+}
+
+impl<'a> MyThing<'a> {
+    fn new(other: &'a SomethingElse) -> Self {
+        //        ^^^
+        Self { other }
+    }
+}
+```
+
+???
+
+- This links the lifetimes together properly
 - As I said earlier, in the future, the compiler may learn even more elision rules, making life
   easier and reducing the number of lifetime annotations that the compiler
   demands you write. But it will always remain valid to be explicit about
@@ -455,7 +459,7 @@ Read, re-read, play with, understand, the "Traits: Defining Shared Behaviour"
 chapter of the rust book (10.2 from `rustup doc --book`)
 
 At least skim, but ideally internalise, the "Advanced Traits" chapter of the
-rust book (19.2 from `rustup doc --book`)-
+rust book (19.2 from `rustup doc --book`)
 
 Read, re-read, play with, understand, really _really_ grok, the "Validating
 References with lifetimes" chapter of the rust book (10.3 from `rustup doc --book`)
