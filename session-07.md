@@ -61,10 +61,13 @@ These are terms which are often defined in terms of one another. While not
 exact antonyms, they do oppose one another in terms of the design of your code.
 When you read around this topic you may also encounter the term 'cohesion' and
 while that's not the same as 'coherence' it's related and worth recognising.
+We'll mention it later briefly.
 
 ---
 
 title: Coupling
+
+# Coupling
 
 - Changes in one part of the code mandate changes elsewhere
 
@@ -82,6 +85,8 @@ of the code to go bad.
 
 title: Coupling
 
+# Coupling
+
 - Changes in one part of the code mandate changes elsewhere
 - Code is hard to isolate and thus hard to test
 
@@ -96,6 +101,8 @@ failed.
 
 title: Coherence
 
+# Coherence
+
 - Isolated (or isolatable)
 
 ???
@@ -108,6 +115,8 @@ or simply because it's a leaf component of some kind.
 ---
 
 title: Coherence
+
+# Coherence
 
 - Isolated (or isolatable)
 - Comprehensible (Grokable)
@@ -124,6 +133,8 @@ is much harder to do in tightly coupled codebases.
 
 title: Increasing coherence, decreasing coupling
 
+# Increase one, decrease the other
+
 - Prototype
 
 ???
@@ -137,6 +148,8 @@ This is the starting point
 ---
 
 title: Increasing coherence, decreasing coupling
+
+# Increase one, decrease the other
 
 - Prototype
 - Architect
@@ -158,6 +171,8 @@ will be useful as you progress.
 
 title: Increasing coherence, decreasing coupling
 
+# Increase one, decrease the other
+
 - Prototype
 - Architect
 - Decompose
@@ -178,9 +193,9 @@ but only if you wrote strong tests back when you prototyped.
 
 ---
 
----
-
 title: Increasing coherence, decreasing coupling
+
+# Increase one, decrease the other
 
 - Prototype
 - Architect
@@ -192,11 +207,13 @@ title: Increasing coherence, decreasing coupling
 The final step in the loop of improving your code is to arrange the code into
 coherent modules. At this point another term 'cohesion' comes in a bit
 because a nicely coherent module and a properly cohesive module are similar in
-concept. Basically put things which should be together together, things which
+concept.
+
+Basically put things which should be together together, things which
 might not belong together apart. It should be easy for a user to find things
 in your crate. If everything is lumped into one module then it can be daunting
-to discover things. If you have a clear "fs" crate and an associated "io"
-crate then the user can usually find the right thing after gaining a feel for
+to discover things. If you have a clear "fs" module and an associated "io"
+module then the user can usually find the right thing after gaining a feel for
 your crate design. Good arrangement improves discoverability of your crate
 functionality.
 
@@ -209,6 +226,8 @@ class: impact
 ---
 
 title: Ways Rust can help you with this
+
+# Doing this in Rust
 
 - API horizons
 
@@ -228,6 +247,8 @@ API, and isolate all the rest behind a crate boundary.
 
 title: Ways Rust can help you with this
 
+# Doing this in Rust
+
 - API horizons
 - Item visibility
 
@@ -242,6 +263,8 @@ consider what 'private' actually means here.
 ---
 
 title: Ways Rust can help you with this
+
+# Doing this in Rust
 
 - API horizons
 - Item visibility
@@ -261,6 +284,8 @@ available to all its modules, but not exported to the users of the crate.
 ---
 
 title: Ways Rust can help you with this
+
+# Doing this in Rust
 
 - API horizons
 - Item visibility
@@ -291,6 +316,8 @@ can remain implemented in some fashion, the API has not changed.
 
 title: Ways Rust can help you with this
 
+# Doing this in Rust
+
 - API horizons
 - Item visibility
   - Not public (private)
@@ -319,6 +346,8 @@ ancestry path of the current module. (can use `self` and `super`)
 ---
 
 title: Ways Rust can help you with this
+
+# Doing this in Rust
 
 - API horizons
 - Item visibility
@@ -408,7 +437,7 @@ title: Structs vs. Traits
 
 - Using a trait
   - Monomorphisation
-  - Trait objects
+  - Trait objects (Dynamic dispatch)
 
 ???
 
@@ -420,8 +449,8 @@ exist. If the trait is public and your crate users can define their own useful
 filesystem implementations, that could be very powerful and yet compile down to
 exactly the code it needs to.
 
-Or you could instead take a trait object - that is either a borrow of a trait
-or a boxed trait object, and you have a single set of code which uses dynamic
+Or you could instead take a trait object - that is either a borrow of a `dyn Trait`
+or a `Box<dyn Trait>`, and you have a single set of code which uses dynamic
 dispatch to talk to however many filesystem implementations there end up being.
 
 This is faster to compile because it only need compile your database once
@@ -445,12 +474,12 @@ title: Semantic versioning
 
 ???
 
-Semantic versioning, which I'm sure you're all aware, is a way to provide a
+Semantic versioning is, I hope you're all aware, a way to provide a
 version number for a library, program, or whatever, where the difference
 between two version numbers provides semantic information as to the scope of
 the difference between the versions of the software itself.
 
-Semantic versioning is split into 3 parts - major, minor, and patch. In the general
+Semantic versioning is typically split into 3 parts - major, minor, and patch. In the general
 case, patch number increments mean bugfixes, minor number increments mean
 additional functionality (and maybe bugfixes), major number increments mean
 removed or fundamentally changed functionality (and maybe additional
