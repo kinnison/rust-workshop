@@ -545,7 +545,7 @@ title: Homework
   - wikipedia and others
 - Item visibility
   - New Rustacean episode 30
-  - `rustup doc --reference` chapter 6.16
+  - `rustup doc --reference` chapter 12.6 (Item visibility)
 - Semantic versioning
   - `https://semver.org/`
   - `https://docs.rs/semver/`
