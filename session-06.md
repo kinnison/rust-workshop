@@ -45,21 +45,9 @@ class: middle
 
 # Topics
 
-1. Anything from homework
-2. Marker traits and the like
-3. Some `Option` and `Result` features worth remembering
-4. Testing things that should fail
-
----
-
-title:
-class: impact
-
-# Homework related questions
-
-???
-
-I don't think anyone has anything to raise, but just in case...
+1. Marker traits and the like
+2. Some `Option` and `Result` features worth remembering
+3. Testing things that should fail
 
 ---
 
@@ -151,13 +139,13 @@ title: Marker traits
 
 ???
 
-`Unpin` is new and interesting and requires a lot more time dedicated to it
+`Unpin` is an interesting one and requires a lot more time dedicated to it
 than I want for this session. Suffice it to say that it's a way to tell the
 compiler that it's okay for the value to move around in memory after the
 compiler has decided that it really shouldn't move if possible. Mostly you'll
 not need to know about this, but you may start to encounter `Pin` and `Unpin`
 in some APIs so it's worth being aware of even if you are not knowledgeable
-about it.
+about it. Particularly if you play around with async code.
 
 ---
 
