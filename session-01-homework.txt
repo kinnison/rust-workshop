@@ -28,14 +28,24 @@ If you prefer, you can store your homework in a git repository, so long as that
 repository is shared with me, and you email in an indication of which branch
 and what commit SHA you want me to consider your homework.
 
-Submissions are due on the morning of the day before the next session. While
-there is no formal "mark" for your homework, sending it in will give me time to
-review any issues which people had, so that we can start the next session with
-a discussion of common issues etc. Problems you have _will_ shape the rest of
-the course, so please do not fail to submit your homework.
+We will be discussing homework during the recap/review week session, so you must
+have completed as much of it as you can before that session. However I do not
+expect you to submit it to me until the morning of the day before the next
+session.
 
-If you want to submit early and/or ask questions, then feel free to do so at any
-point up to the final submission deadline.
+While there is no formal "mark" for your homework, sending it in will confirm
+to me that you have engaged properly with the course, dedicated sufficient time
+to your own learning, and also will allow me to see if there are issues which
+need to be picked up which weren't raised during the recap session.
+
+Problems you have _will_ shape the rest of the course, so please do not fail to
+submit your homework.
+
+If you want to submit early and/or ask questions outside of the recap/review
+sessions, then feel free to do so at any point up to the final submission
+deadline.  If something is not clear to you, it may not be clear to others,
+and so an opportunity to correct that once for everyone is preferable to me
+having to deal with bad homework answers from you all.
 
 ## Problem 1: Adding up numbers
 
@@ -68,7 +78,8 @@ Your goal is to write a program which when run as follows:
     $ cargo run -- inputfilename
 
 will read the contents of `inputfilename`, break it into lines, parse each line
-as a number of some useful type, sum all the numbers, and print the sum to stdout.
+as a number of some useful type, sum all the numbers, and print the sum to
+stdout.
 
 If any of the lines does not parse as a suitable number, please just return
 the error out of your main function, using the techniques we learned in the
@@ -111,7 +122,8 @@ You now have an input file with the following content:
     But perhaps you're as lost as a little lamb?
     ---8<---
 
-As some of you will likely know, this is a program in the [Brainfuck][] language.
+As some of you will likely know, this is a program in the [Brainfuck][]
+language.
 
 For now, we're not going to be writing anything as complex as a Brainfuck
 interpreter, though we will be building one in the future so bear that
@@ -136,5 +148,5 @@ However, for bonus points, make use of `Vec<char>`, `Vec<u8>` or `String` and
 learn how to use `collect()` from the `Iterator` trait.
 
 Note: You'll want to get hold of as many different valid Brainfuck inputs as you
-can to try it out. I will not be holding back with my test cases, so be as thorough
-as you can.
+can to try it out. I will not be holding back with my test cases, so be as
+thorough as you can.

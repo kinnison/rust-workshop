@@ -65,7 +65,7 @@ $ curl https://sh.rustup.rs/ | sh -
 $ exit
 ... open new terminal ...
 $ cargo --version
-cargo 1.58.0 (f01b232bc 2022-01-19)
+cargo 1.66.1 (ad779e08b 2023-01-10)
 ```
 
 ???
@@ -86,7 +86,7 @@ title: Setting up a toolchain
 $ rustup component add clippy
 ... time passes ...
 $ cargo clippy --version
-clippy 0.1.58 (db9d1b2 2022-01-20)
+clippy 0.1.66 (90743e7 2023-01-10)
 ```
 
 ???
@@ -105,8 +105,8 @@ title: IDE integration
 
 - VSCode <https://code.visual-studio.com/>
 - `rustup`, `clippy`, `rustfmt` etc
-- VSCode's rust-analyzer `matklad.rust-analyzer` extension
-  - `Ctrl+P` `ext install matklad.rust-analyzer` `RET`
+- VSCode's rust-analyzer `rust-lang.rust-analyzer` extension
+  - `Ctrl+P` `ext install rust-lang.rust-analyzer` `RET`
   - Recommended configurations which differ from default:
   - `editor.formatOnSave` set to `true` for `rustfmt` integration
   - `rust-analyzer.checkOnSave.command` set to `clippy` so that you get lints
@@ -445,7 +445,7 @@ use std::env::args;
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let fname = args().skip(1).next().ok_or("Expected filename")?;
+    let fname = args().nth(1).ok_or("Expected filename")?;
     let content = fs::read_to_string(fname)?;
     println!("I read {} characters", content.chars().count());
     print!("{}", content);
