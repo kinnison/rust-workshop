@@ -525,7 +525,7 @@ title: Happy Birthday Daniel!
 ...
 
 fn main() {
-    let mut person = get_author();
+*   let mut person = get_author();
 
     person.have_birthday();
 

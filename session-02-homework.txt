@@ -4,11 +4,12 @@ Session 2 homework
 As last time, the first part will be practice for what we've looked at this week
 while part two will be building up the work toward a BF interpreter.
 
-This homework block is much larger and more complex than the first set of homework
-so please don't wait to get started.  The sooner you try, the sooner you can ask
-should you encounter any issues.  Again, you have a week to try your homework,
-and then bring questions to our recap session.  Then a week to finish your
-homework before you need to "hand it in" to me the morning before our next session.
+This homework block is much larger and more complex than the first set of
+homework so please don't wait to get started. The sooner you try, the sooner you
+can ask should you encounter any issues. Again, you have a week to try your
+homework, and then bring questions to our recap session. Then a week to finish
+your homework before you need to "hand it in" to me, ideally a day, but at least
+the morning before our next session.
 
 Part 1 - Practice for structs and enumerations
 ----------------------------------------------
@@ -19,7 +20,7 @@ a little.  It'll not be glorious, but you will get practice.  As such, work very
 carefully through this section.  I really want you to *understand* what it is
 that you have done by the end of this question.  Please find me, ask questions
 over lunch, show me your code if it's not working, and we can discuss it.  This
-is your first really big job, and it's important that you get it *just right*.
+is your first really big task, and it's important that you get it *just right*.
 
 If you get stuck, go back to the beginning and check that you've followed all of
 the steps I wrote out.  It may even help you to make a commit after each little
@@ -28,9 +29,8 @@ do everything asked of me at this step?"
 
 This is a big part 1 but you'll have learned a lot ready for part 2.
 
-You will have input in the form:
+You will have input in the following form (without the indentations):
 
-    ---8<---
     Harry:9
     Susan:4
     Gregory:3
@@ -55,10 +55,11 @@ You will have input in the form:
     Ulrika:7
     Daniel Silverstone:10
     Fred Jones
-    ---8<---
 
-I would like you to define a enum to represent a line.  It should have
-two variants.  One for the form "name:number" and one for the form "name".
+I would like you to define a enum to represent a line. It should have two
+variants. One for the form "name:number" and one for the form "name". Call the
+first variant `NameAndNumber` and the other `NameOnly` and ensure that they
+contain the relevant data.
 
 I want you to implement `std::convert::TryFrom` for your enumeration, converting
 from either `&str`, or `&String`.
@@ -70,10 +71,10 @@ You should be able to parse the "name:number" form into a string and a number
 of some type.  I'll be perfectly happy if the error type you associate to your
 `TryFrom` implementation is `Box<dyn std::error::Error>` but also quite happy
 if you'd prefer to `format!()` your error message and have your error type be
-a `String`.
+a `String`.  At this time _do not_ write another enumeration for your errors.
 
 Next, I'd like for you to write a function which takes a filename and returns
-a Result<Vec<EnumName>, Box<dyn std::error::Error>>. This function should open,
+a `Result<Vec<EnumName>, Box<dyn std::error::Error>>`. This function should open,
 and read the file (whichever approach you prefer) and then convert the lines
 into those `EnumName` instances using the `TryFrom` implementation above,
 returning a vector.  It should stop on the first error, returning that, rather
@@ -90,20 +91,23 @@ At this point look over your code.  Ensure there are no `.unwrap()` or `.expect(
 calls.  All your errors should be percolated up and out of the `main()` function
 appropriately.
 
+Make a commit now, so that I'll be able to refer back to this version of your
+code.
+
 Next I'd like you to define a struct to represent scores.  Each input line is,
 in fact, a score from a test.  I'm not telling you if small numbers are good
 or bad, they are simply scores.  I want your struct to contain a number of
-values: a running total of all the scores you've seen, and a count of those
+fields: a running total of all the scores you've seen, and a count of those
 scores. If a line lacks a score, then it means that person didn't take the test
 and you should not count a score for that line.  Instead you should count it
-as a missed test, making a third value for your struct to store.
+as a missed test, making a third field for your struct to store.
 
 I will want this struct to have an implementation of `std::default::Default`
 and for you to use this instead of writing a `ScoreStruct::new` function which
 takes no arguments.
 
 You'll want some nice methods for that struct such as `add_score` or `missed_test`
-though you likely won't need accessor methods for the scores.
+along with nice accessor methods for the values in the struct.
 
 Finally I'd like you to use `HashMap` to map from a person's name to an
 accumulation of their scores.  Ideally you should be using the `Entry` API on
@@ -111,6 +115,8 @@ the map to make your code nicer.  Your map will need a type along the lines
 of `HashMap<String, ScoreStruct>`.
 
 Ensure you can print the `HashMap` using `println!("{:?}", fullmap);`
+
+Make a commit here, so I can refer back to this version of your code.
 
 Finally, demonstrate the full scores by iterating through the map, outputting
 lines such as:
@@ -146,23 +152,20 @@ Implement an associated function `RawInstruction::from_char` which returns
 an `Option<RawInstruction>` which is `None` if the input character isn't a valid
 raw BF instruction.
 
-If you'd prefer, you can implement the above as `TryFrom<Error=()>`, though it
-probably makes more sense to do it as I suggest, returning an `Option<T>` instead
-since BF doesn't ever *fail* on unknown input, it merely ignores things which are
-not known instruction characters. (These are comments after all.)
-
 You *may* if you prefer, do all the above with `u8` rather than `char` given that
 nominally BF always deals with bytes.  That is up to you.  For now `char` is likely
-to be easier to work with.
+to be easier to work with, and since we're not performance sensitive, I don't mind.
 
 Next, I would like a struct to represent each input instruction, using the
 `RawInstruction` enumeration from above, and also two `usize` values to
 represent the line number and character column of the instruction.
 
 Please write a function like in part 1 which takes a filename and returns a
-`Result<Vec<StructFromAbove>, Box<dyn std::error::Error>>`.
+`Result<Vec<InstructionWithPositionOrWhatever>, Box<dyn std::error::Error>>`.
 
 Use a debugging `println!` to ensure the parsed data is useful.
+
+Commit this so that I can refer back to it.
 
 Now let's get to the last part of the task…
 
@@ -184,4 +187,4 @@ for the `RawInstruction`.  If you do, you might find the `Clone` and `Copy`
 traits useful to derive on your nice simple enumeration.
 
 Test your program using the input from last week.  The above output is from the
-start of that.
+start of that.  Once you have it all working, make a commit.
