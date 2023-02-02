@@ -457,7 +457,7 @@ title: Using our Person
 ...
 
 fn get_author() -> Person {
-    Person::new("Daniel Silverstone", 41 /* For now. */)
+    Person::new("Daniel Silverstone", 42 /* For now. */)
 }
 
 fn main () {
