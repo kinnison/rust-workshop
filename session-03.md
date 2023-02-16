@@ -44,13 +44,17 @@ class: middle
 
 # Topics
 
-???
-
 1. Crates - binaries vs libraries
 2. Crates - Finding and depending on libraries
 3. Documentation - writing it
 4. Tests - writing them
 5. CI habits
+
+???
+
+I'll also be encouraging you all to actually work hard to write Rusty code. It
+seems awkward now, but getting into the habit of common Rust idioms will make
+your code easier to deal with long term.
 
 ---
 
@@ -90,13 +94,14 @@ etc. In addition, publication data is present here for if you're pushing your
 crate to `crates.io`.
 
 The lock file is only really for binaries - libraries don't get to lock very
-specific versions (excepting via the semver of their deps).
+specific versions (excepting via the semver of their deps). There is some
+discussion around this at the moment, but for now, this is the case.
 
 Libraries start at `src/lib.rs` typically, and binaries at `src/main.rs` though
 there are ways around this.
 
 While unit tests are _inside_ the crate code, integration tests get to live in
-a separate tests directory.
+a separate `tests` directory.
 
 The `target` directory is made by cargo, it'll be git-ignored by default and
 should be considered throw-away.
@@ -116,11 +121,13 @@ members = [
 
 ???
 
-Cargo supports the concept of workspaces which are where a crate can have
-other crates stored inside it. This is commonly done for composite libraries
-or when you're writing a complex program with one or more internal libraries.
+Cargo supports the concept of workspaces which are where a crate (or just a
+directory) can have other crates stored inside it. This is commonly done for
+composite libraries or when you're writing a complex program with one or more
+internal libraries.
 
-We'll be using this in our homework (though I'll walk you through it step by step)
+We'll be using this in our homework (though I'll walk you through it step by
+step)
 
 With a workspace in place you can run things like `cargo build --all` to get
 all crates built, even if they're not direct dependencies of one another.
@@ -132,18 +139,16 @@ title: Finding and depending on libraries
 - Sometimes you don't want to write code because there'll be a library already
   written which will do what you need.
 - But it can be a pain to find and to know what you then need to do to use it.
-- There are some tricks to using crates.io and docs.rs to work it all out.
+- There are some tricks to using `crates.io` and `docs.rs` to work it all out.
 - Cue a demonstration...
 
 ???
 
-For this case, we're going to go through the process of learning how to do
-a very simple regular expression program, finding external crates, and using
-them to great effect.
+For this case, we're going to go through the process of learning how to do a
+very simple curl type program, finding external crates, and using them to great
+effect.
 
-Find `Regex` on `crates.io`, show `docs.rs` for how to use, notice
-`lazy_static` on the readme, investigate that and then make a program using
-both of them, referring to the documentation heavily.
+Find `reqwest` and use the blocking API to fetch a URL and print it out.
 
 ---
 
@@ -155,10 +160,12 @@ title: Documenting a crate
 
 ???
 
-We're going to do another live-coding demonstration here. Make a new crate
-which has a struct `Accumulator` which is parameterised on the number type to
-accumulate. We're going to document the lot including writing some simple
+We're going to do another live-coding demonstration here. Make a new library
+crate which has a struct `Accumulator` which is parameterised on the number type
+to accumulate. We're going to document the lot including writing some simple
 tests in the docs.
+
+This will need us to write useful trait bounds etc.
 
 ---
 
@@ -227,11 +234,12 @@ Things for you to research for next week
 - These common traits:
 
 ```rust
+// Revisit and really understand the relationship and differences for:
+std::clone::Clone && std::marker::Copy
+
 std::fmt::{Debug, Display} // Refresh
 std::cmp::{Eq, PartialEq, Ord, PartialOrd} // Refresh
-std::default::Default
-// Grok the differences, *and* the relationship between:
-std::clone::Clone && std::marker::Copy
+std::default::Default // Refresh
 ```
 
 - Go and properly grok the following:
