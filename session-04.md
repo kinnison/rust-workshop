@@ -48,7 +48,7 @@ class: middle
 
 1. Modules - what, how, where, why?
 2. Command line handling with `clap`
-3. Command line handling with `clap-derive`
+3. Command line handling with `clap -F derive`
 
 ---
 
@@ -157,9 +157,10 @@ You can also use external module files, though that gets a smidge more
 complicated since we have to conditionalise the import too
 
 ---
+
 title: Modules - Scopes
 
-* Scopes
+- Scopes
 
 ???
 
@@ -171,21 +172,23 @@ Modules introduce another level of scoping though, related to the visibility
 modifier `pub`
 
 ---
+
 title: Modules - Scopes
 
-* Scopes
-* Visibility
+- Scopes
+- Visibility
 
 ???
 
 By default, things can only see public stuff in scopes which are not in the
-direct ancestry path of themselves.  Consider...
+direct ancestry path of themselves. Consider...
 
 ---
+
 title: Modules - Scopes
 
-* Scopes
-* Visibility
+- Scopes
+- Visibility
 
 ```rust
 struct Upper {}
@@ -205,9 +208,9 @@ mod One {
 
 In this example, nothing is marked public, yet:
 
-* `onetwo()` can see all of `Upper`, `Lower`, `threefour` with judicious
+- `onetwo()` can see all of `Upper`, `Lower`, `threefour` with judicious
   use of `super::`
-* `threefour()` can see `Upper` and `Lower`, but not `onetwo()`.
+- `threefour()` can see `Upper` and `Lower`, but not `onetwo()`.
 
 If we adjust things like this:
 
@@ -215,8 +218,8 @@ If we adjust things like this:
 
 title: Modules - Scopes
 
-* Scopes
-* Visibility
+- Scopes
+- Visibility
 
 ```rust
 struct Upper {}
@@ -294,7 +297,7 @@ Clap uses the builder pattern which we discussed in the previous proper session.
 title: Commandline handling - Clap - Simple example
 
 ```rust
-App::new("Brainfuck Tool")
+Command::new("Brainfuck Tool")
      .version(env!("CARGO_PKG_VERSION"))
      .author("Daniel Silverstone")
      .about("Interprets Brainfuck programs")
@@ -314,9 +317,9 @@ Here's a very simple Clap setup which is for our `bft` program. It returns a
 title: Commandline handling - Clap - Using the matches
 
 ```rust
-matches.value_of("PROGRAM").unwrap() // Safe because .required(true)
+matches.get_one::<String>("PROGRAM").unwrap() // Safe because .required(true)
 
-matches.value_of("PROGRAM")                        // Nicer,
+matches.try_get_one::<String>("PROGRAM")           // Nicer,
        .expect("BUG: mandatory PROGRAM not found") // but unnecessary
 ```
 
@@ -338,27 +341,27 @@ Let's create a new binary crate and have a go with clap.
 
 ---
 
-title: Commandline handling - clap-derive - Equivalence
+title: Commandline handling - clap -F derive - Equivalence
 
 ```rust
 /// A Brainfuck tool
-#[derive(Parser,Debug)]
+#[derive(Parser, Debug)]
 #[clap(author, version, about, name = "bft")]
 struct Options {
     /// The program to interpret
-    #[clap(name="PROGRAM", parse(from_os_str))]
+    #[clap(name="PROGRAM")]
     program: PathBuf,
 }
 
 fn main() {
     let opt = Options::parse();
-    println!("{:?}", opt);
+    println!("{:#?}", opt);
 }
 ```
 
 ???
 
-The `clap-derive` crate uses `clap` under the hood, but allows you to
+The `clap` crate's `derive` feature uses `clap` under the hood, but allows you to
 define your options by means of a structure instead of open-coding them.
 
 I'm not going to state which approach you should use, not least because I use both
@@ -370,7 +373,8 @@ and a YAML approach as well as the derive approach.
 
 title: Homework
 
-Play with `clap-derive` and `clap` because you'll need one of them (or something
+Play with `clap`'s `derive` feature, and maybe `clap` directly, because you'll
+need one of them (or something
 similar) for your homework. You'll also want to revise `PathBuf` and `Path`,
 and you might want to learn about `OsStr` and `OsString` because they might
 be important depending on how you do your homework.
