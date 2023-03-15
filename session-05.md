@@ -45,7 +45,7 @@ class: middle
 # Topics
 
 1. Defining your own traits
-2. Another way to say what type you take as an argument
+2. Recapping `impl Trait` and `dyn Trait`
 3. Lifetimes - What are they and why do they matter
 4. Specifying lifetimes when defining types
 
@@ -176,7 +176,6 @@ fn something(reader: &mut impl Read) -> io::Result<()> { ... }
 - I tend to pronounce this as "a function, called something, takes a parameter
   called reader, which is a borrow of a mutable value which implements the Read
   trait"
-- You _could_ omit the `impl` for now, but it's recommended not to.
 
 ---
 
@@ -206,27 +205,24 @@ title: `dyn Trait`
 Box<OneThing>
 
 // A trait, thus the box is two ptrs (value and trait vtable)
-Box<dyn AnotherThing>
+*Box<dyn AnotherThing>
 ```
 
 ???
 
 - This helps humans - the compiler could always tell which was which, but
   humans couldn't
-- It's better to add syntax so that different things look different
-- With current Rust compilers, it's an error if you skip the `dyn` unless
-  you're using the 2015 or 2018 editions.
 
 ---
 
 title: `dyn Trait`
 
 ```rust
-fn borrow_thing(a: &impl Thing) { ... }
+fn borrow_some_thing(a: &impl Thing) { ... }
 
 // vs.
 
-fn borrow_thing(a: &dyn Thing) { ... }
+fn borrow_any_thing(a: &dyn Thing) { ... }
 ```
 
 ???
@@ -246,7 +242,7 @@ title: `impl Trait` and `dyn Trait`
 
 # Useful to know...
 
-- The compiler can (and will) lint this for you…
+- The compiler can (and will) complain at you around this topic
 
 ???
 
@@ -310,7 +306,7 @@ fn get_first<'a>(input: &'a [String]) -> Option<&'a String> {...}
   grounding.
 - It's never wrong to tell the compiler something it could have worked out for
   itself, but it's sometimes wrong to fail to tell it something you think it ought
-  to be able to work out, but it can't.
+  to be able to work out, but it either can't or won't.
 
 ---
 
@@ -328,7 +324,7 @@ struct MyThing {
 - But what happens if you construct a `MyThing` and then the `SomethingElse`
   it is borrowing goes out of scope.
 - That would perhaps induce a use-after-free type bug, which is something that
-  the Rust compiler tries to avoid.
+  the Rust compiler tries to help you to avoid.
 
 ---
 
@@ -348,7 +344,7 @@ struct MyThing<'a> {
 - This time, we tell the compiler that the `MyThing` struct type has a lifetime
   parameter which is applied to the `other` borrow of the `SomethingElse`.
 - This means that the compiler is able to track the borrow and thus prevent us
-  from use-after-free and other bugs.
+  from having use-after-free and other bugs.
 - Fortunately we don't tend to have to specify the lifetime argument when using
   the type, because now that we've taught the compiler that we're aware of how
   the lifetimes relate, it can track them for us instead with the elision
@@ -372,10 +368,10 @@ impl<'a> MyThing<'a> {
 ???
 
 - When writing `impl` blocks for a struct which has parameters you have to
-  specify the parameters in the `impl` block too.
+  introduce the parameters in the `impl` block too.
 - This extends to lifetime parameters, despite what I just said about elision,
   you **must** be explicit here.
-- The `'a` in the `impl` does not have to match the `'a` in the `struct`
+- The `'a` name in the `impl` does not have to match the `'a` in the `struct`
   definition, it's merely convention that it does.
 
 ---
