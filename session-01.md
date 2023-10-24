@@ -458,6 +458,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 - Putting all of that together we can write something like this
 - Walk through it explaining:
   1. Main's return type and what that Box is in brief terms
+     **labour this point because it's not obvious**
   2. Highlight the question mark operator
   3. Explain how `len()` is bytes, but the `chars()` iterator is characters
   4. Demonstrate that by means of some utf8 fancy chars (emoji or otherwise)
