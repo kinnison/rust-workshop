@@ -64,8 +64,7 @@ contain the relevant data.
 I want you to implement `std::convert::TryFrom` for your enumeration, converting
 from either `&str`, or `&String`.
 
-Remember you can bring the trait into scope with `use std::convert::TryFrom` and
-then you simply need to `impl TryFrom<&str> for WhateverYouCalledYourEnumeration {…}`.
+You need to `impl TryFrom<&str> for WhateverYouCalledYourEnumeration {…}`.
 
 You should be able to parse the "name:number" form into a string and a number
 of some type.  I'll be perfectly happy if the error type you associate to your
