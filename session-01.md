@@ -448,7 +448,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let fname = args().nth(1).ok_or("Expected filename")?;
     let content = fs::read_to_string(fname)?;
     println!("I read {} characters", content.chars().count());
-    print!("{}", content);
+    print!("{content}");
     Ok(())
 }
 ```
@@ -463,6 +463,7 @@ fn main() -> Result<(), Box<dyn Error>> {
   3. Explain how `len()` is bytes, but the `chars()` iterator is characters
   4. Demonstrate that by means of some utf8 fancy chars (emoji or otherwise)
   5. Show how even if you have a string, you MUST have a format for `println!()` et al.
+  6. Mention direct use of variable in format, ala python but not as powerful
 
 ---
 
