@@ -306,7 +306,7 @@ the exit path.
 
 Let-else is a relatively new construct. It lets you match on a specific pattern and
 then handle the case where it doesn't match in the else block. Something to note
-is that this else block must break the exit the current scope. This is usually done
+is that this else block must break or exit the current scope. This is usually done
 by breaking/continuing a loop or returning from the function.
 
 ---
