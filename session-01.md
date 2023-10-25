@@ -290,6 +290,7 @@ match something { ... }
 
 loop { ...; break someval; }
 
+let pattern = ... else { ...; <break control flow> }
 ```
 
 ???
@@ -302,6 +303,11 @@ Interestingly, the `loop` function, normally a forever loop, can actually
 return a value by means of `break`. Again, any `break`s in a `loop` must have
 the same type, so that the loop will have the same type over-all, no matter
 the exit path.
+
+Let-else is a relatively new construct. It lets you match on a specific pattern and
+then handle the case where it doesn't match in the else block. Something to note
+is that this else block must break or exit the current scope. This is usually done
+by breaking/continuing a loop or returning from the function.
 
 ---
 
