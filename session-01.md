@@ -65,7 +65,7 @@ $ curl https://sh.rustup.rs/ | sh -
 $ exit
 ... open new terminal ...
 $ cargo --version
-cargo 1.66.1 (ad779e08b 2023-01-10)
+cargo 1.73.0 (9c4383fb5 2023-08-26)
 ```
 
 ???
@@ -86,7 +86,7 @@ title: Setting up a toolchain
 $ rustup component add clippy
 ... time passes ...
 $ cargo clippy --version
-clippy 0.1.66 (90743e7 2023-01-10)
+clippy 0.1.73 (cc66ad4 2023-10-03)
 ```
 
 ???
