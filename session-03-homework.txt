@@ -14,10 +14,10 @@ You should start it ASAP and _talk_ to me if you need to.
 # Introduction
 
 This week we're dropping to one homework problem, because there are a number of
-moving parts in it. From this week onward, your homework will be building on the
-same codebase. As such I recommend that you create a new git repository to store
-this and future homework in. Wherever I remind you to commit in this code, also
-take that as instruction to push it somewhere too.
+moving parts in it. From this week onward, your homework will be building on
+the same codebase. As such I require that you create a new git repository to
+store this and future homework changes in. Wherever I remind you to commit in
+this code, also take that as instruction to push it somewhere too.
 
 We are, unsurprisingly, going to be developing a Brainfuck related project.
 
@@ -92,11 +92,12 @@ can use `std::io::Result<YourStructureNameHere>` as the return type quite safely
 Ensure that your code _CANNOT_ panic here. i.e. propagate errors upward
 cleanly.  I should see no `.unwrap()` or `.expect()` calls.
 
-For extra credit, separate the file-access from the construction of the program
-structure by also writing a `new` function which takes a filename (path-like as
-before) and the content as a string-like. You can call that `new` because it
-shouldn't be able to fail and so you can return your structure directly. Make
-your `from_file()` function call this to construct the actual result.
+You should consider separating the file-access from the construction of the
+program structure by also writing a `new` function which takes a filename
+(path-like as before) and the content as a string-like. You can call that `new`
+because it shouldn't be able to fail and so you can return your structure
+directly. Make your `from_file()` function call this to construct the actual
+result.
 
 Your structure itself (and any types which you end up needing to allow users of
 the library to interact with) will need to be public, _but_ your structure's
@@ -121,11 +122,13 @@ of cells to allocate for the tape. Ideally it should take that as a usize and
 if zero is provided, it should use the default 30,000. 
 
 If you're feeling particularly spicy, you could take an `Option<NonZeroUsize>`
-instead of a `usize` which might be zero.
+instead of a `usize` which might be zero.  (Note, I like spicy food, and code)
 
 Also, you should allow your interpreter to grow the tape optionally, by passing
 in a boolean to indicate if the tape should be permitted to grow; clearly this
-will also need such a boolean stored in your interpreter struct.
+will also need such a boolean stored in your interpreter struct.  If you want,
+rather than a boolean, you could create an enumeration to express the meaning
+of extendable vs. static length, but sometimes a simple `bool` is enough.
 
 # Task Three - Bringing things together a little
 
@@ -172,6 +175,9 @@ your tests and that they pass.
 
 Once again, make a commit if you've not already
 
+If you want to add more tests elsewhere you may, but I'm not going to require
+tests for anything else for now.
+
 # Task Six - Documentation
 
 If you've re-run `cargo doc --all` and re-explored your generated docs, you'll
@@ -210,9 +216,9 @@ docs to there if you want.
 
 Remember that once you've made your changes, ensure they're committed.
 
-# Extra Credit (though frankly you really ought to do this)
+# Task Eight
 
-Set up CI on whichever git server you've picked (e.g. Travis or Github Actions
+Set up CI on whichever git server you've picked (e.g. Github Actions
 for Github, or gitlab-ci for GitLab). Ensure that your code passes its tests,
 and is formatted properly, on every commit. If you're feeling super-duper excited,
 make it pass clippy too.
@@ -221,3 +227,7 @@ make it pass clippy too.
 
 To hand your homework in, send me a link to your repository, and tell me the
 branch and SHA of the commit I should consider your handed-in homework.
+
+In future sessions you may want to do your homework in a branch and give me a PR/MR
+to review instead of just a branch+rev, but for now, we'll be reviewing the whole
+thing as one.
