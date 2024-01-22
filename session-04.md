@@ -304,7 +304,7 @@ Command::new("Brainfuck Tool")
      .about("Interprets Brainfuck programs")
      .arg(Arg::with_name("PROGRAM")
           .help("The program to interpret")
-          .required(true)
+          .required(true))
      .get_matches()
 ```
 
