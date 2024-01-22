@@ -290,7 +290,8 @@ title: Commandline handling - Clap
 Clap is a good command line handler which is designed to produce nice command
 line APIs with good help etc for minimum effort.
 
-Clap uses the builder pattern which we discussed in the previous proper session.
+Clap uses something often referred to as "the builder pattern", so let's have
+a look at that kind of thing…
 
 ---
 
@@ -339,6 +340,10 @@ class: impact
 
 Let's create a new binary crate and have a go with clap.
 
+- add clap
+- use builder API, explore on docs.rs a bit
+- goal is: `cargo run -- --help` and `cargo run -- filename`
+
 ---
 
 title: Commandline handling - clap -F derive - Equivalence
@@ -365,9 +370,8 @@ The `clap` crate's `derive` feature uses `clap` under the hood, but allows you t
 define your options by means of a structure instead of open-coding them.
 
 I'm not going to state which approach you should use, not least because I use both
-in different circumstances. If you do choose `clap` directly then be aware there's many
-different ways to use it, the builder pattern shown today, but also a macro,
-and a YAML approach as well as the derive approach.
+in different circumstances. If you don't like the look of `clap` there are plenty of
+others, but the material in the homework will assume you choose `clap`.
 
 ---
 
