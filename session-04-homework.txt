@@ -7,6 +7,11 @@ up to you.  At the end of this session's homework, your `bft` tool will have a
 slightly nicer CLI arg parser and should be capable of syntax checking the
 hello-world program which we have been carrying around since session 1.
 
+Remember, from now on, homework review is up to you until the end of the project.
+If you want me to review it, you need to ask me to.  Perhaps you can do this
+by creating merge requests and asking me to review those - you don't have to do
+one MR per task, nor one per homework session, but break things up logically.
+
 Task One - The completionist
 ============================
 
