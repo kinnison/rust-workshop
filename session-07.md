@@ -221,6 +221,33 @@ functionality.
 
 class: impact
 
+# A Philosophy of Software Design
+
+## John Ousterhout
+
+???
+
+If you've not yet read this book, please do so. The whole book is relevant to
+the topic of organising your code well. John describes good software as being
+narrow and deep, where you have minimum-width well-documented coherent APIs atop
+complex well organised deep and coherent behviour.
+
+And while we're speaking about books - several Codethings have copies of
+"Rust for Rustaceans" which you might want to read when you've finished your
+BFT project as it covers a number of topics in depth which might interest you
+later in your Rust career. Jon has also given talks about designing software
+in Rust which, depending on the conference in question, you might be able to
+find them online.
+
+Also I have a copy of Mara Bos' book about
+atomics and locks which is fascinating if you enjoy lower-level memory and
+concurrency stuff. Again though, it's quite an advanced book. I believe the
+content is also available online.
+
+---
+
+class: impact
+
 ## Bringing this to Rust code
 
 ---
@@ -362,22 +389,19 @@ title: Ways Rust can help you with this
 
 ???
 
-Let's imagine a library crate.
+Let's look at some examples...
 
-Arranging your crate into nice modules is important because it helps you to
-design coherent code as discussed before. However you want to make it possible
-for your sibling modules to gain access to your functionality so you might use
-one of the restricted public access markers. For example, you might have a
-module `throbber` which manages things which throb. It might have a submodule
-called `core` which concerns itself only with core throbbing functionality.
-Since `core` is a submodule of `throbber` it would need to declare content
-as public in order to allow `throbber` to use it. But if `throbber` were a
-public module, we might want to ensure that we don't accidentally re-export
-anything from `core` so we mark it `pub (crate)` or `pub (super)`.
+If Daniel,
 
-That way, even if a user of the crate could try to _path_ to something like
-`throbber::CoreThingy` they wouldn't be able to actually do it because while
-that item exists, the _maximal_ visibility was `pub (crate)`.
+- marked_data -- MappingHash and is_empty_scalar
+- subplot - various
+
+If others,
+
+- rust obviously has lots
+- ayllu (by Kevin Schoon)
+- tonic has lots
+- many other larger crates
 
 ---
 
@@ -539,6 +563,23 @@ crate via `pub (crate)` or similar.
 
 ---
 
+title: Semantic versioning
+
+- What is it?
+- Is the cornerstone of your users trust in being able to upgrade
+- Must be foremost in your thinking when making changes
+- Humans cannot spot everything
+
+???
+
+There is a tool called `cargo semver-checks` which _helps_ you to decide
+if your changes to your library should be major, minor, or patch. It
+cannot spot _everything_ which could be breaking, but it's a useful checkpoint
+for _after_ you've decided for yourself as it might spot something you
+hadn't realised happened (eg. something which was Send/Sync no longer being so).
+
+---
+
 title: Homework
 
 - Coherence and coupling
@@ -568,6 +609,8 @@ For semantic versioning, the specification is excellent and you should read it.
 The Rust crate `semver` is also useful since it helps you to understand how to
 tell if one version _satisfies_ a version dependency limit as you might use
 in a `Cargo.toml`.
+
+Mention Jon Gjengset, Chris Biscardi, etc.
 
 ---
 
